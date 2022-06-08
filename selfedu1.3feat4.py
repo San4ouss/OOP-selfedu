@@ -1,15 +1,9 @@
-class MediaPlayer:
-    def open(self, file):
-        self.filename = file
+class Goods:
+    title = "Мороженое"
+    weight = 154
+    tp = "Еда"
+    price = 1024
 
-    def play(self):
-        print(f"Воспроизведение {self.filename}")
 
-
-media1 = MediaPlayer()
-media2 = MediaPlayer()
-
-media1.open("filemedia1")
-media2.open("filemedia2")
-media1.play()
-media2.play()
+setattr(Goods, "price", 2048)
+setattr(Goods, "inflation", 100)
