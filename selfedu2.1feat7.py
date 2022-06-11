@@ -15,4 +15,4 @@ class Line:
         return self.__x1, self.__y1, self.__x2, self.__y2
 
     def draw(self):
-        return f"{self.__x1} {self.__y1} {self.__x2} {self.__y2}"
+        print(f"{self.__x1} {self.__y1} {self.__x2} {self.__y2}")
