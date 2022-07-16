@@ -1,41 +1,29 @@
-class Viber:
-    lst = []
+class Video:
+    def create(self, name):
+        self.name = name
+
+    def play(self):
+        print(f"воспроизведение видео {self.name}")
+
+
+class YouTube:
+    videos = []
 
     @classmethod
-    def add_message(cls, msg):
-        cls.lst.append(msg)
+    def add_video(cls, video):
+        cls.videos.append(video)
 
     @classmethod
-    def remove_message(cls, msg):
-        cls.lst.remove(msg)
-
-    @classmethod
-    def set_like(cls, msg):
-        msg.fl_like = True
-
-    @classmethod
-    def show_last_message(cls, number):
-        return cls.lst[number].text
-
-    @classmethod
-    def total_messages(cls):
-        return len(cls.lst)
+    def play(cls, video_indx):
+        cls.videos[video_indx].play()
 
 
-class Message:
-    def __init__(self, text, fl_like=False):
-        self.text = text
-        self.fl_like = fl_like
+v1 = Video()
+v2 = Video()
 
-
-msg = Message("Всем привет!")
-Viber.add_message(msg)
-Viber.add_message(Message("Это курс по Python ООП."))
-Viber.add_message(Message("Что вы о нем думаете?"))
-Viber.set_like(msg)
-Viber.remove_message(msg)
-
-print(Viber.show_last_message(0))
-print(Viber.total_messages())
-
-
+v1.create("Python")
+v2.create("Python ООП")
+YouTube.add_video(v1)
+YouTube.add_video(v2)
+YouTube.play(0)
+YouTube.play(1)
