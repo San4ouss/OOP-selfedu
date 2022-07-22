@@ -1,6 +1,4 @@
 class Money:
-    d = {"MoneyR": "rus", "MoneyD": "dollar", "MoneyE": "euro"}
-
     def __init__(self, volume=0):
         self.__volume = volume
         self.__cb = None
@@ -15,62 +13,44 @@ class Money:
 
     @property
     def cb(self):
+        if self.__cb is None:
+            raise ValueError("Неизвестен курс валют.")
         return self.__cb
 
     @cb.setter
     def cb(self, cb):
         self.__cb = cb
 
-    def __eq__(self, other):
-        if isinstance(self, MoneyR):
-            rubles = self.__cb.rates.get("rub") * self.__volume
-            currency = other.__cb.rates.get("rub") * other.__cb.rates.get(
-                other.d[other.__class__.__name__]) * other.volume
-            return rubles == currency
+    @staticmethod
+    def check_currency(other):
+        if isinstance(other, MoneyD):
+            return other.volume * other.cb.rates.get("rub")
+
+        elif isinstance(other, MoneyE):
+            return other.volume * other.cb.rates.get("rub") * other.cb.rates.get("euro")
+
         else:
-            currency1 = self.__cb.rates.get("rub") * self.__cb.rates.get(
-                other.d[other.__class__.__name__]) * self.volume
-            currency2 = other.__cb.rates.get("rub") * other.__cb.rates.get(
-                other.d[other.__class__.__name__]) * other.volume
-            return currency1 == currency2
+            return other.volume
+
+    def __eq__(self, other):
+        first_currency = self.check_currency(self)
+        second_currency = self.check_currency(other)
+        return 0 <= abs(first_currency - second_currency) <= 0.1
 
     def __lt__(self, other):
-        rubles = self.__cb.rates.get("rub") * self.__volume
-        currency = other.__cb.rates.get("rub") * other.__cb.rates.get(other.d[other.__class__.__name__]) * other.volume
-        return rubles < currency
+        first_currency = self.check_currency(self)
+        second_currency = self.check_currency(other)
+        return second_currency - first_currency > 0.1
 
     def __le__(self, other):
-        rubles = self.__cb.rates.get("rub") * self.__volume
-        currency = other.__cb.rates.get("rub") * other.__cb.rates.get(other.d[other.__class__.__name__]) * other.volume
-        return rubles <= currency
+        first_currency = self.check_currency(self)
+        second_currency = self.check_currency(other)
+        return second_currency - first_currency >= 0.1
 
 
 class MoneyR(Money):
     def __init__(self, volume=0):
         super().__init__(volume)
-
-    def __eq__(self, other):
-        if isinstance(self, MoneyR):
-            rubles = self.__cb.rates.get("rub") * self.__volume
-            currency = other.__cb.rates.get("rub") * other.__cb.rates.get(
-                other.d[other.__class__.__name__]) * other.volume
-            return rubles == currency
-        else:
-            currency1 = self.__cb.rates.get("rub") * self.__cb.rates.get(
-                other.d[other.__class__.__name__]) * self.volume
-            currency2 = other.__cb.rates.get("rub") * other.__cb.rates.get(
-                other.d[other.__class__.__name__]) * other.volume
-            return currency1 == currency2
-
-    def __lt__(self, other):
-        rubles = self.__cb.rates.get("rub") * self.__volume
-        currency = other.__cb.rates.get("rub") * other.__cb.rates.get(other.d[other.__class__.__name__]) * other.volume
-        return rubles < currency
-
-    def __le__(self, other):
-        rubles = self.__cb.rates.get("rub") * self.__volume
-        currency = other.__cb.rates.get("rub") * other.__cb.rates.get(other.d[other.__class__.__name__]) * other.volume
-        return rubles <= currency
 
 
 class MoneyD(Money):
@@ -96,6 +76,7 @@ class CentralBank:
 
 rubles = MoneyR()
 print(type(rubles.__class__.__name__))
+
 CentralBank.rates = {'rub': 72.5, 'dollar': 1.0, 'euro': 1.15}
 
 r = MoneyR(45000)
