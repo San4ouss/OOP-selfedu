@@ -19,26 +19,17 @@ class FloatValue:
 class Cell:
     value = FloatValue()
 
-    def __init__(self, value):
+    def __init__(self, value=0.0):
         self.value = value
 
 
 class TableSheet:
     def __init__(self, N, M):
-        self.cells = [[Cell(0.0)] * M] * N
+        self.cells = [[Cell(float(row * M + col + 1)) for col in range(M)] for row in range(N)]
 
 
-table = TableSheet(3, 5)
-for i in table.cells:
-    print(*i)
+table = TableSheet(5, 3)
 
 for i in table.cells:
-    for j in range(len(i)):
-        pass
-
-print(isinstance(0.0, float))
-
-lst = [[Cell(0.0).value] * 5] * 3
-print(lst)
-for i in lst:
-    print(*i)
+    for j in i:
+        print(j.value, end=" ")
