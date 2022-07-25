@@ -19,7 +19,10 @@ class ShopItem:
         return hash((self.name.lower(), self.weight, self.price))
 
     def __eq__(self, other):
-        return hash(self) == hash(other)
+        if hash(self) == hash(other):
+            self.total += 1
+            return True
+        return False
 
 
 lst_in = ["Системный блок: 1500 75890.56",
