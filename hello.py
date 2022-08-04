@@ -173,6 +173,9 @@
 # print(res)
 
 
-s = {'txt', 'doc', 'xls', 'png', 'jpeg', 'jpg'}
-print(s)
-print('doc' in s)
+# s = {'txt', 'doc', 'xls', 'png', 'jpeg', 'jpg'}
+# print(s)
+# print('doc' in s)
+
+lst = [0 for _ in range(10)]
+print(lst)
