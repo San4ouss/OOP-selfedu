@@ -177,5 +177,12 @@
 # print(s)
 # print('doc' in s)
 
-lst = [0 for _ in range(10)]
-print(lst)
+# lst = [0 for _ in range(10)]
+# print(lst)
+
+# a = [1, 2, 3]
+# b = [1, 2, 3]
+# a = (1, 2, 3)
+# b = (1, 2, 3)
+# print(a == b)
+# print(a is b)
