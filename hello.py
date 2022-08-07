@@ -186,3 +186,20 @@
 # b = (1, 2, 3)
 # print(a == b)
 # print(a is b)
+
+# lst = [1, 2, 3, 4, 6]
+# # lst[1:3] = [5, 5, 5, 5, 5]
+# print(lst[:1] + [5, 5, 5] + lst[1:])
+# lst[1:1] = [5, 5, 5]
+# print(lst)
+
+# print(isinstance(lst[:], slice))
+
+# import os
+#
+# print(os.path.dirname(__file__))
+# print(os.getcwd())
+
+a = "5 - 5 + 5"
+
+print(type(eval(a)))
